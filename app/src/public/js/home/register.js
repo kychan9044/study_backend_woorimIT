@@ -1,19 +1,23 @@
 "use strict";
 
 const id = document.querySelector("#id"),
+    name = document.querySelector("#name"),
     passwd = document.querySelector("#passwd"),
-    loginBtn = document.querySelector("#button");
+    confirmPasswd = document.querySelector("#confirm-passwd"),
+    registerBtn = document.querySelector("#button");
 
-loginBtn.addEventListener("click", login);
+registerBtn.addEventListener("click", register);
 
-function login() {
+function register() {
     const req = {
         id: id.value,
-        passwd: passwd.value
+        name: name.value,
+        passwd: passwd.value,
+        confirmPasswd: confirmPasswd.value
     };
     console.log(JSON.stringify(req));
 
-    fetch("/login", {
+    fetch("/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -23,12 +27,12 @@ function login() {
     .then((res) => res.json())
     .then((res) => {
         if (res.success) {
-            location.href = "/";
+            location.href = "/login";
         } else{
             alert(res.msg);
         }
     })
     .catch((err) => {
-        console.error(new Error("로그인 중 에러 발생"));
+        console.error(new Error("회원가입 중 에러 발생"));
     });
 }
